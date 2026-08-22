@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  TappGo's privacy manifest — a declaration Apple requires *of the SDK*, not of the host app: a client
+  cannot describe a binary's API use or data collection on our behalf, and App Store Connect rejects the
+  submission if nobody does (ITMS-91053). It ships at the root of TappGo.framework, where Xcode folds it
+  into the client's aggregated privacy report.
+
+  Every entry below is grounded in code, and each is a deliberate choice between codes that read alike:
+  see docs/DISTRIBUTION-PLAN.md for the reasoning and docs/ANALYTICS-EVENTS.md for the complete list of
+  what the SDK sends. Adding an API category, a data type, or a purpose is a change to a client's own
+  App Store answers — make it deliberately, and keep PrivacyManifestTests in step.
+-->
+<plist version="1.0">
+<dict>
+    <!-- No advertising identifier, no device or session fingerprint, no location, and no host-authored
+         property in any payload. There is no public tracking API to carry one. -->
+    <key>NSPrivacyTracking</key>
+    <false/>
+    <key>NSPrivacyTrackingDomains</key>
+    <array/>
+
+    <key>NSPrivacyCollectedDataTypes</key>
+    <array>
+        <!-- The host-supplied id, sent as `player_id` on the member token exchange (TokenEndpoints).
+             Linked: it is the identity the back office attributes a player's activity to. Not tracking:
+             it never leaves Tapp and is not joined with data from other companies' apps. -->
+        <dict>
+            <key>NSPrivacyCollectedDataType</key>
+            <string>NSPrivacyCollectedDataTypeUserID</string>
+            <key>NSPrivacyCollectedDataTypeLinked</key>
+            <true/>
+            <key>NSPrivacyCollectedDataTypeTracking</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypePurposes</key>
+            <array>
+                <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+                <string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
+            </array>
+        </dict>
+
+        <!-- The analytics events themselves: a Live Activity opened, a permission declined, a screen that
+             could not be resolved. Linked, because the bearer token they are sent under identifies the
+             player even though no id appears in the body. -->
+        <dict>
+            <key>NSPrivacyCollectedDataType</key>
+            <string>NSPrivacyCollectedDataTypeProductInteraction</string>
+            <key>NSPrivacyCollectedDataTypeLinked</key>
+            <true/>
+            <key>NSPrivacyCollectedDataTypeTracking</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypePurposes</key>
+            <array>
+                <string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
+            </array>
+        </dict>
+
+        <!-- `content_state` — the push's own variables, echoed back verbatim by
+             `live_activity_app_open`. A campaign composes it in the back office, so its contents are not
+             knowable here and a static manifest cannot enumerate them; "Other Data Types" is what Apple
+             provides for exactly that. Declared rather than omitted because the alternative is a client
+             whose privacy label is wrong the first time a campaign puts a name in there. The back-office
+             rule against PII in `content_state` still stands — this declaration does not license it. -->
+        <dict>
+            <key>NSPrivacyCollectedDataType</key>
+            <string>NSPrivacyCollectedDataTypeOtherDataTypes</string>
+            <key>NSPrivacyCollectedDataTypeLinked</key>
+            <true/>
+            <key>NSPrivacyCollectedDataTypeTracking</key>
+            <false/>
+            <key>NSPrivacyCollectedDataTypePurposes</key>
+            <array>
+                <string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
+            </array>
+        </dict>
+    </array>
+
+    <key>NSPrivacyAccessedAPITypes</key>
+    <array>
+        <!-- `UserDefaults(suiteName:)` — the App Group suite, in KeyValueStore and RenderDebug.
+             1C8F.1, not CA92.1: the latter covers defaults reachable only by one app, which would be a
+             false declaration for the app<->extension seam the whole SDK is built on. -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <string>1C8F.1</string>
+            </array>
+        </dict>
+
+        <!-- `contentModificationDateKey`, read by FileEventQueue to order the durable queue.
+             C617.1 (metadata of files inside the app group container), not DDA9.1 (showing timestamps to
+             the user) and not 3B52.1 (files the user picked) — neither happens here. -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <string>C617.1</string>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>

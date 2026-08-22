@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The chrome for Project Settings → Tapp. The fields themselves are not here: TappGoSettingsProvider
+    adds a PropertyField per serialized property into #fields, so the page keeps undo, right-click revert
+    and settings-search highlighting, which hand-rolled controls would quietly lose.
+-->
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="TappSettings.uss" />
+
+    <ui:VisualElement name="root" class="tapp-root">
+
+        <ui:VisualElement name="header" class="tapp-header">
+            <ui:VisualElement name="logo" class="tapp-logo" />
+            <ui:VisualElement class="tapp-header__text">
+                <ui:Label name="tagline" class="tapp-tagline"
+                          text="Live Activities on iOS, from Unity." />
+                <ui:Label name="version" class="tapp-version" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="tapp-rule" />
+
+        <!-- Shown when the project has no settings asset yet; hidden once it does. -->
+        <ui:VisualElement name="create" class="tapp-create">
+            <ui:Label class="tapp-create__text"
+                      text="This project has no Tapp settings yet. Create them to set your App Group and Tapp app id." />
+            <ui:Button name="createButton" class="tapp-button" text="Create Tapp settings" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="fields" class="tapp-fields" />
+
+        <!--
+            What the two font folders actually amount to, filled in by the provider: the animations each
+            folder holds and the names a design has to ask for them by. Both empty and hidden until their
+            folder is set, because most projects bundle no fonts at all.
+        -->
+        <ui:VisualElement name="fontAnimations" class="tapp-fonts" />
+        <ui:VisualElement name="fonts" class="tapp-fonts" />
+
+        <ui:VisualElement name="status" class="tapp-status">
+            <ui:VisualElement name="statusStripe" class="tapp-status__stripe" />
+            <ui:Label name="statusText" class="tapp-status__text" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

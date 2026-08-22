@@ -1,0 +1,128 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.2.4 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)
+// swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 6 -enforce-exclusivity=checked -O -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-experimental-feature DebugDescriptionMacro -module-name TappGo
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.4
+import ActivityKit
+import AppIntents
+import CoreGraphics
+import CoreText
+import CryptoKit
+import Foundation
+import ImageIO
+import Security
+import Swift
+import SwiftUI
+import UIKit
+import WidgetKit
+import _AppIntents_SwiftUI
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(TappBridge) final public class TappBridge : ObjectiveC.NSObject {
+  @objc(sdkVersion) public static func sdkVersion() -> Swift.String
+  @objc(configureWithJSON:) public static func configure(json: Swift.String) -> Swift.String
+  @objc(setUserIDWithJSON:) public static func setUserID(json: Swift.String) -> Swift.String
+  @objc(logoutWithCompletion:) public static func logout(completion: @escaping @Sendable (Swift.String) -> Swift.Void)
+  @objc(handleURLWithJSON:) public static func handleURL(json: Swift.String) -> Swift.String
+  @objc(startLiveActivityWithJSON:completion:) public static func startLiveActivity(json: Swift.String, completion: @escaping @Sendable (Swift.String) -> Swift.Void)
+  @objc(updateLiveActivityWithJSON:completion:) public static func updateLiveActivity(json: Swift.String, completion: @escaping @Sendable (Swift.String) -> Swift.Void)
+  @objc(endLiveActivityWithJSON:completion:) public static func endLiveActivity(json: Swift.String, completion: @escaping @Sendable (Swift.String) -> Swift.Void)
+  @objc(activeLiveActivities) public static func activeLiveActivities() -> Swift.String
+  @objc deinit
+}
+public struct TappAppConfiguration : Swift.Sendable, Swift.Equatable {
+  public let appGroupIdentifier: Swift.String
+  public let liveActivities: TappGo.TappLiveActivityConfiguration?
+  #if compiler(>=5.3) && $NonescapableTypes
+  public init(appGroupIdentifier: Swift.String, liveActivities: TappGo.TappLiveActivityConfiguration? = nil)
+  #endif
+  public static func == (a: TappGo.TappAppConfiguration, b: TappGo.TappAppConfiguration) -> Swift.Bool
+}
+public struct TappLiveActivityConfiguration : Swift.Sendable, Swift.Equatable {
+  public let appID: Swift.String
+  public let pushEnabled: Swift.Bool
+  public init(appID: Swift.String, pushEnabled: Swift.Bool = true)
+  public static func == (a: TappGo.TappLiveActivityConfiguration, b: TappGo.TappLiveActivityConfiguration) -> Swift.Bool
+}
+public enum Tapp {
+  public static func configure(_ configuration: TappGo.TappAppConfiguration) throws
+  public static func configureLiveActivity(appGroupIdentifier: Swift.String) throws
+  @discardableResult
+  public static func handleURL(_ url: Foundation.URL) -> Swift.Bool
+  public static func setUserID(_ userID: Swift.String) throws
+  public static func logout() async throws
+}
+extension TappGo.Tapp {
+  #if compiler(>=5.3) && $NonescapableTypes
+  @discardableResult
+  public static func startLiveActivity(id: Swift.String, entryID: Swift.String, seconds: Swift.Int? = nil) async throws -> Swift.String
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public static func updateLiveActivity(id: Swift.String, entryID: Swift.String, seconds: Swift.Int? = nil) async throws
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  public static func endLiveActivity(id: Swift.String, entryID: Swift.String, seconds: Swift.Int? = nil) async throws
+  #endif
+  public static func activeLiveActivities() throws -> [TappGo.TappLiveActivityInfo]
+}
+public enum TappError : Swift.Error, Swift.Equatable, Swift.Sendable {
+  case invalidConfiguration(reason: Swift.String)
+  case notConfigured
+  case liveActivitiesUnavailable
+  case liveActivityStartFailed(reason: Swift.String)
+  case liveActivityAlreadyRunning(id: Swift.String)
+  public static func == (a: TappGo.TappError, b: TappGo.TappError) -> Swift.Bool
+}
+extension TappGo.TappError {
+  public var code: Swift.String {
+    get
+  }
+  public var message: Swift.String {
+    get
+  }
+}
+extension TappGo.TappError : Foundation.LocalizedError {
+  #if compiler(>=5.3) && $NonescapableTypes
+  public var errorDescription: Swift.String? {
+    get
+  }
+  #endif
+}
+@available(iOS 17.2, *)
+@_Concurrency.MainActor @preconcurrency public struct TappLiveActivity : SwiftUI.Widget {
+  @_Concurrency.MainActor @preconcurrency public init()
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUI.WidgetConfiguration {
+    get
+  }
+  @available(iOS 17.2, *)
+  public typealias Body = @_opaqueReturnTypeOf("$s6TappGo0A12LiveActivityV4bodyQrvp", 0) __
+}
+public struct TappLiveActivityInfo : Swift.Hashable, Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let activityID: Swift.String
+  public let entryID: Swift.String?
+  public let state: TappGo.TappLiveActivityState
+  public init(from decoder: any Swift.Decoder) throws
+  public static func == (a: TappGo.TappLiveActivityInfo, b: TappGo.TappLiveActivityInfo) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct TappLiveActivityState : Swift.RawRepresentable, Swift.Hashable, Swift.Codable, Swift.Sendable {
+  public let rawValue: Swift.String
+  public init(rawValue: Swift.String)
+  public static let active: TappGo.TappLiveActivityState
+  public static let ended: TappGo.TappLiveActivityState
+  public static let dismissed: TappGo.TappLiveActivityState
+  public static let stale: TappGo.TappLiveActivityState
+  public static let pending: TappGo.TappLiveActivityState
+  public var isFinished: Swift.Bool {
+    get
+  }
+  public typealias RawValue = Swift.String
+}
+@available(iOS 17.2, *)
+extension TappGo.TappLiveActivity : Swift.Sendable {}

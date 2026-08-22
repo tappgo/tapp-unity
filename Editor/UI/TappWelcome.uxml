@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The window a host sees once, the first time com.tapp.go is resolved into their project.
+
+    TappSettings.uss comes first and carries everything shared — the brand tokens on .tapp-root, the header,
+    the rule, the status strip and the button. TappWelcome.uss adds only what a step list needs. A second
+    copy of the purple is how the two pages come to disagree about it.
+-->
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="TappSettings.uss" />
+    <Style src="TappWelcome.uss" />
+
+    <ui:ScrollView name="scroll" class="tapp-welcome__scroll">
+        <ui:VisualElement name="root" class="tapp-root">
+
+            <ui:VisualElement name="header" class="tapp-header">
+                <ui:VisualElement name="logo" class="tapp-logo" />
+                <ui:VisualElement class="tapp-header__text">
+                    <ui:Label name="tagline" class="tapp-tagline"
+                              text="Live Activities on iOS, from Unity." />
+                    <ui:Label name="version" class="tapp-version" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="tapp-rule" />
+
+            <ui:Label name="intro" class="tapp-welcome__intro"
+                      text="Tapp adds a native Live Activity extension to your Xcode project on every iOS build. There is nothing to wire up in Xcode by hand — but two things are worth knowing before the first build." />
+
+            <!-- 1 -->
+            <ui:VisualElement class="tapp-step">
+                <ui:Label class="tapp-step__badge" text="1" />
+                <ui:VisualElement class="tapp-step__body">
+                    <ui:Label class="tapp-step__title" text="Configure the SDK" />
+                    <ui:Label class="tapp-step__text"
+                              text="Set your App Group and Tapp app id. An iOS build is refused without them, because a missing App Group renders an empty Live Activity on device with no error at all." />
+                    <ui:Button name="settingsButton" class="tapp-button" text="Open Tapp Settings" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- 2 -->
+            <ui:VisualElement class="tapp-step tapp-step--last">
+                <ui:Label class="tapp-step__badge" text="2" />
+                <ui:VisualElement class="tapp-step__body">
+                    <ui:Label class="tapp-step__title" text="Build to a device" />
+                    <ui:Label class="tapp-step__text"
+                              text="Live Activities only render on real hardware. The Simulator does not enforce App Group entitlements, so a misconfigured build renders a placeholder there instead of failing — which reads as a working integration right up until a tester sees a blank card." />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="status" class="tapp-status">
+                <ui:VisualElement name="statusStripe" class="tapp-status__stripe" />
+                <ui:Label name="statusText" class="tapp-status__text" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="tapp-welcome__footer">
+                <ui:Button name="docsButton" class="tapp-button tapp-button--ghost" text="Documentation" />
+                <ui:Label name="reopen" class="tapp-welcome__reopen"
+                          text="Reopen any time from the Tapp menu." />
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

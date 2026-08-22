@@ -1,0 +1,33 @@
+{
+  "name": "com.tapp.go",
+  "version": "2.0.0",
+  "displayName": "Tapp",
+  "description": "Server-configured Live Activities for iOS, without shipping a new app build. Ships the native TappGo framework and creates the widget extension in your Xcode project at build time.",
+  "unity": "2022.3",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": {
+    "name": "Tapp",
+    "url": "https://tappgo.com"
+  },
+  "documentationUrl": "https://documentation.tappgo.com/v2/unity/overview",
+  "keywords": [
+    "tapp",
+    "live-activity",
+    "widget",
+    "ios",
+    "engagement"
+  ],
+  "hideInEditor": false,
+  "samples": [
+    {
+      "displayName": "Live Activity Demo",
+      "description": "Start, update and end a Live Activity from a scene, and reconcile after a relaunch.",
+      "path": "Samples~/LiveActivityDemo"
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/TappRepos/Tapp-Unity",
+    "type": "git",
+    "revision": "d625caecb582dbf639c146021cfd1271e94801c7"
+  }
+}
