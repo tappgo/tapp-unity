@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  GENERATED — re-staged from the Tapp package on every build. Edits here are lost.
+
+  Tokens substituted at stage time:
+    __TAPP_DISPLAY_NAME__   the extension's display name: Extension Display Name in Project Settings →
+                            Tapp, or your product name when that is empty
+
+  The identifier and version are build-setting references rather than literals, and the hook sets all
+  three on the target: PRODUCT_BUNDLE_IDENTIFIER, plus MARKETING_VERSION and CURRENT_PROJECT_VERSION
+  copied from the app's own Info.plist so the two bundles cannot drift — an appex whose version differs
+  from its host is rejected at submission.
+
+  Do not remove a $(…) reference here without also removing the setting that feeds it. An unset build
+  setting expands to an EMPTY STRING rather than failing, and the resulting appex is rejected only at
+  install time, on device, by installd: "does not have a CFBundleVersion key with a non-zero length
+  string value". It builds, signs and validates perfectly well before that.
+-->
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>__TAPP_DISPLAY_NAME__</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.widgetkit-extension</string>
+	</dict>
+</dict>
+</plist>

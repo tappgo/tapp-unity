@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For hosts that run Google's External Dependency Manager (EDM4U). It is not required: the Tapp build hook
+  writes the same dependency into the generated Gradle project on every Android build, and that is the path
+  every host gets. This file exists so a host that already resolves its Android dependencies through EDM4U
+  sees Tapp's in the same place and gets its version-conflict resolution across SDKs.
+
+  The version here is a copy of NativePin.AndroidVersion in Runtime/Internal/NativePin.cs, and
+  Tools/native-pin.py -check fails CI when the two disagree. Move both in one change.
+-->
+<dependencies>
+  <androidPackages>
+    <androidPackage spec="com.tappgo:tapp-core:2.1.0">
+      <repositories>
+        <repository>https://repo1.maven.org/maven2</repository>
+      </repositories>
+    </androidPackage>
+  </androidPackages>
+</dependencies>

@@ -1,0 +1,242 @@
+/*
+    Project Settings → Tapp.
+
+    Branded frame, native controls. The header, the rule, the status strip and the button are ours; every
+    field inside .tapp-fields is a stock PropertyField and is left looking like one on purpose — a settings
+    page that restyles Unity's own controls stops behaving like the pages either side of it, and the reader
+    notices that long before they notice the colour.
+
+    Both editor skins are styled. The provider puts tapp--dark or tapp--light on the root, because the same
+    purple that reads well on #383838 goes muddy on #c8c8c8 — so a tapp--dark/tapp--light pair below marks
+    something that genuinely differs per skin, and anything that doesn't is written once.
+
+    The brand purple is declared once here and read through var(). It appeared four times as a literal, which
+    is how the fifth comes to be a shade off, and the two shades the button moves through are relatives of it
+    rather than independent choices.
+*/
+
+.tapp-root {
+    padding: 8px 12px 12px 10px;
+    --tapp-accent: rgb(108, 41, 255);
+    --tapp-accent-hover: rgb(124, 66, 255);
+    --tapp-accent-active: rgb(92, 30, 226);
+}
+
+/* MARK: - Header */
+
+.tapp-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.tapp-logo {
+    width: 118px;
+    height: 51px;
+    background-image: url("TappLogo.png");
+    -unity-background-scale-mode: scale-to-fit;
+    margin-right: 14px;
+}
+
+.tapp-header__text {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.tapp-tagline {
+    font-size: 13px;
+    -unity-font-style: bold;
+    margin-bottom: 2px;
+}
+
+.tapp-version {
+    font-size: 11px;
+    opacity: 0.6;
+}
+
+/* No skin split: the rule is a solid band of the brand colour, and it reads on both grounds. */
+.tapp-rule {
+    height: 2px;
+    margin-bottom: 14px;
+    border-radius: 1px;
+    background-color: var(--tapp-accent);
+}
+
+/* MARK: - Fields */
+
+.tapp-fields {
+    margin-bottom: 6px;
+}
+
+/* The [Header] attributes on TappGoSettings; PropertyField renders them, we only space them. */
+.tapp-fields .unity-header-drawer__label {
+    -unity-font-style: bold;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-size: 12px;
+}
+
+.tapp--dark .tapp-fields .unity-header-drawer__label { color: rgb(168, 134, 255); }
+.tapp--light .tapp-fields .unity-header-drawer__label { color: rgb(84, 30, 200); }
+
+/* MARK: - Font animations */
+
+.tapp-fonts {
+    margin-top: 4px;
+}
+
+.tapp-fonts__foldout {
+    margin-bottom: 2px;
+}
+
+/* unity-foldout__text is the Foldout's own class for its header label. Reaching it by element type instead
+   (Toggle > VisualElement > Label) would work today and break on whatever Unity version changes that tree. */
+.tapp-fonts__foldout .unity-foldout__text {
+    font-size: 11px;
+    -unity-font-style: bold;
+    opacity: 0.75;
+}
+
+/*
+    The height cap is the point of this rule, not the styling around it. A host's font folder is as long as
+    they want it to be, and forty rows pushed the status strip off the bottom of a Project Settings page that
+    would not scroll to reach it — so the list stops here and scrolls inside itself instead. The width cap is
+    the same argument sideways: a settings pane can be dragged very wide, and a two-column row spanning all of
+    it is a row nobody's eye can follow across.
+*/
+.tapp-fonts__list {
+    max-height: 190px;
+    max-width: 480px;
+    margin-left: 2px;
+}
+
+.tapp-fonts__row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+/* Grows to fill whatever is left, which is what right-aligns the detail without pinning the name to a fixed
+   column width it might not fit in. */
+.tapp-fonts__spacer {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 12px;
+}
+
+/* The animation's name is the load-bearing half — it is what a Tapp design refers to it by — so it gets
+   the accent and the count is left quiet across the row. */
+.tapp-fonts__name {
+    font-size: 12px;
+    -unity-font-style: bold;
+    flex-shrink: 0;
+}
+
+.tapp-fonts__detail {
+    font-size: 12px;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.tapp--dark .tapp-fonts__name { color: rgb(168, 134, 255); }
+.tapp--light .tapp-fonts__name { color: rgb(84, 30, 200); }
+
+.tapp-fonts__note {
+    font-size: 11px;
+    white-space: normal;
+    opacity: 0.6;
+    margin-top: 4px;
+}
+
+/* MARK: - Status */
+
+.tapp-status {
+    flex-direction: row;
+    margin-top: 12px;
+    padding: 9px 10px 9px 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.tapp--dark .tapp-status { background-color: rgba(255, 255, 255, 0.05); }
+.tapp--light .tapp-status { background-color: rgba(0, 0, 0, 0.05); }
+
+/* A colour-blind-safe signal needs more than hue, so ok/bad also differ in the text itself. */
+.tapp-status__stripe {
+    width: 3px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.tapp-status__text {
+    flex-grow: 1;
+    white-space: normal;
+    font-size: 12px;
+}
+
+.tapp-status--ok .tapp-status__stripe { background-color: var(--tapp-accent); }
+.tapp-status--bad .tapp-status__stripe { background-color: rgb(219, 68, 55); }
+
+.tapp--dark .tapp-status--bad .tapp-status__text { color: rgb(255, 138, 128); }
+.tapp--light .tapp-status--bad .tapp-status__text { color: rgb(168, 26, 15); }
+
+/* MARK: - Create prompt */
+
+.tapp-create {
+    margin-bottom: 8px;
+}
+
+.tapp-create__text {
+    white-space: normal;
+    font-size: 12px;
+    margin-bottom: 10px;
+    opacity: 0.85;
+}
+
+.tapp-button {
+    align-self: flex-start;
+    height: 24px;
+    padding: 0 16px;
+    color: rgb(255, 255, 255);
+    background-color: var(--tapp-accent);
+    border-width: 0;
+    border-radius: 4px;
+}
+
+.tapp-button:hover { background-color: var(--tapp-accent-hover); }
+.tapp-button:active { background-color: var(--tapp-accent-active); }
+
+/* MARK: - Visibility */
+
+.tapp-hidden {
+    display: none;
+}
+
+/* The heading over one product package's section — see TappGoSettingsProvider.AddModuleSections. A rule and
+   the package's name set it apart from core's own [Header] groups above: it is a different package, and
+   removing that package removes the section. */
+.tapp-module-heading {
+    flex-direction: row;
+    align-items: flex-end;
+    margin-top: 16px;
+    margin-bottom: 4px;
+    padding-top: 8px;
+    border-top-width: 1px;
+}
+
+.tapp--dark .tapp-module-heading { border-top-color: rgba(168, 134, 255, 0.35); }
+.tapp--light .tapp-module-heading { border-top-color: rgba(84, 30, 200, 0.35); }
+
+.tapp-module-heading__title {
+    -unity-font-style: bold;
+    font-size: 13px;
+}
+
+.tapp--dark .tapp-module-heading__title { color: rgb(168, 134, 255); }
+.tapp--light .tapp-module-heading__title { color: rgb(84, 30, 200); }
+
+.tapp-module-heading__package {
+    margin-left: 8px;
+    font-size: 11px;
+    opacity: 0.6;
+}
