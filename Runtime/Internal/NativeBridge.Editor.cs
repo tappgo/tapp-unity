@@ -28,6 +28,12 @@ namespace TappGo.Internal
             return TappNative.Ok;
         }
 
+        internal static string SetLanguage(string json)
+        {
+            TappNative.Log("SetLanguage", json);
+            return TappNative.Ok;
+        }
+
         internal static void Logout(Action<string> completion)
         {
             TappNative.Log("Logout");

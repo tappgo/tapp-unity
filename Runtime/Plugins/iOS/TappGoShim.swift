@@ -104,6 +104,13 @@ public func TappGo_SetUserID(_ json: UnsafePointer<CChar>?) -> UnsafeMutablePoin
     tappGoHandOff(TappBridge.setUserID(json: tappGoPayload(json)))
 }
 
+/// `{"language":"he-IL"}`, or `{"language":""}` to follow the device again — the bridge's spelling of the
+/// native `nil`, decided natively. The managed side sends `""` for a C# `null`; nothing here looks at the value.
+@_cdecl("TappGo_SetLanguage")
+public func TappGo_SetLanguage(_ json: UnsafePointer<CChar>?) -> UnsafeMutablePointer<CChar>? {
+    tappGoHandOff(TappBridge.setLanguage(json: tappGoPayload(json)))
+}
+
 /// Takes no payload, by design — a `(context, reply)` signature beats requiring an empty JSON object.
 @_cdecl("TappGo_Logout")
 public func TappGo_Logout(_ context: UnsafeMutableRawPointer?, _ reply: TappGoReply?) {

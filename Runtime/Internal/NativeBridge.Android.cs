@@ -40,6 +40,11 @@ namespace TappGo.Internal
             return TappNative.Call(BridgeClass, "setUserID", json);
         }
 
+        internal static string SetLanguage(string json)
+        {
+            return TappNative.Call(BridgeClass, "setLanguage", json);
+        }
+
         /// <summary>
         /// Android has no URL entry point: a widget's link arrives through the Widgets package's pending link,
         /// and any other URL is the host's own. "Not mine" is the honest and the safe answer.
