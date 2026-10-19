@@ -6,7 +6,7 @@ Tapp is **one package per product**, so a project installs what it uses and noth
 
 | Package | What it adds | Repo |
 |---|---|---|
-| `com.tapp.go` — **this one, always** | `Tapp`: configure, `SetUserId`, `Logout`, `HandleUrl` | [`tappgo/tapp-unity`](https://github.com/tappgo/tapp-unity) |
+| `com.tapp.go` — **this one, always** | `Tapp`: configure, `SetUserId`, `SetLanguage`, `Logout`, `HandleUrl` | [`tappgo/tapp-unity`](https://github.com/tappgo/tapp-unity) |
 | `com.tapp.go.liveactivities` | `TappLiveActivities`: Live Activities on iOS | [`tappgo/tapp-liveactivities-unity`](https://github.com/tappgo/tapp-liveactivities-unity) |
 | `com.tapp.go.widgets` | `TappWidgets`: home-screen widgets on iOS and Android, Picture in Picture on iOS | [`tappgo/tapp-widgets-unity`](https://github.com/tappgo/tapp-widgets-unity) |
 
@@ -45,9 +45,9 @@ Add core **and each product you use** to `Packages/manifest.json`, all at the **
 ```json
 {
   "dependencies": {
-    "com.tapp.go": "https://github.com/tappgo/tapp-unity.git#v2.1.1",
-    "com.tapp.go.liveactivities": "https://github.com/tappgo/tapp-liveactivities-unity.git#v2.1.1",
-    "com.tapp.go.widgets": "https://github.com/tappgo/tapp-widgets-unity.git#v2.1.1"
+    "com.tapp.go": "https://github.com/tappgo/tapp-unity.git#v2.2.0",
+    "com.tapp.go.liveactivities": "https://github.com/tappgo/tapp-liveactivities-unity.git#v2.2.0",
+    "com.tapp.go.widgets": "https://github.com/tappgo/tapp-widgets-unity.git#v2.2.0"
   }
 }
 ```
@@ -111,6 +111,7 @@ var configured = Tapp.Configure();      // reads the settings above; once, befor
 if (!configured.Ok) Debug.LogError(configured);
 
 Tapp.SetUserId(player.Id);              // safe on every launch; a different id ends the previous session
+Tapp.SetLanguage("he");                 // request content in Hebrew; null follows the device again
 Tapp.Logout(result => { });             // back to a guest session
 Debug.Log(Tapp.SdkVersion().Value);     // the first thing to check when an integration isn't working
 ```

@@ -13,7 +13,7 @@ the tag:
 
 ```json
 "dependencies": {
-  "com.tapp.go": "https://github.com/tappgo/tapp-unity.git#v2.1.1"
+  "com.tapp.go": "https://github.com/tappgo/tapp-unity.git#v2.2.0"
 }
 ```
 

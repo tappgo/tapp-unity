@@ -27,7 +27,7 @@ namespace TappGo.Internal
         internal const string IosRepositoryUrl = "https://github.com/tappgo/tapp-ios";
 
         /// <summary>The exact tag Xcode resolves. Never a range: the binary's checksum is per-tag.</summary>
-        internal const string IosVersion = "2.2.2";
+        internal const string IosVersion = "2.3.0";
 
         /// <summary>The core product: the whole bridge facade, and the one module every shim imports.</summary>
         /// <remarks>
@@ -40,7 +40,7 @@ namespace TappGo.Internal
         /// <summary>The Maven Central artifact, in Gradle's <c>group:name:version</c> spelling.</summary>
         internal const string AndroidGroup = "com.tappgo";
         internal const string AndroidArtifact = "tapp-core";
-        internal const string AndroidVersion = "2.1.1";
+        internal const string AndroidVersion = "2.2.0";
         internal const string AndroidCoordinates = AndroidGroup + ":" + AndroidArtifact + ":" + AndroidVersion;
 
         /// <summary>The version the running platform's binary is expected to report.</summary>

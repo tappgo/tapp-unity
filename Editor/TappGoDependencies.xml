@@ -10,7 +10,7 @@
 -->
 <dependencies>
   <androidPackages>
-    <androidPackage spec="com.tappgo:tapp-core:2.1.1">
+    <androidPackage spec="com.tappgo:tapp-core:2.2.0">
       <repositories>
         <repository>https://repo1.maven.org/maven2</repository>
       </repositories>

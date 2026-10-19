@@ -242,6 +242,41 @@ namespace TappGo
         }
 
         /// <summary>
+        /// Sets the language Tapp content is requested in, overriding the device's.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Without an override the SDK asks for the device's language and the server serves the closest
+        /// language the content is published in, or its base language when there is none. Call this when your
+        /// game lets the player pick a language of its own; pass <c>null</c> (or an empty string) to follow the
+        /// device again.
+        /// </para>
+        /// <para>
+        /// Stored app-wide and <b>kept across <see cref="Logout"/></b>, like the device's own settings. Setting
+        /// the value that is already set does nothing. Returns as soon as the call is accepted; the override is
+        /// recorded and the content re-fetched in the background, and widgets redraw once it is cached.
+        /// </para>
+        /// <para>
+        /// <b>Today only widget content is published per language</b>; Live Activities are unaffected. A tag
+        /// the content has no translation for is not an error — the base content is served. The tag is sent as
+        /// given (<c>"he"</c>, <c>"pt-BR"</c>); the server normalizes it.
+        /// </para>
+        /// <para>
+        /// Requires <see cref="Configure"/> to have succeeded; answers <c>notConfigured</c> otherwise.
+        /// </para>
+        /// </remarks>
+        /// <param name="language">
+        /// A BCP 47 language tag, such as <c>"he"</c> or <c>"pt-BR"</c>, or <c>null</c> to follow the device.
+        /// </param>
+        public static TappResult SetLanguage(string language)
+        {
+            // The bridge spells "follow the device" as the empty string, and JsonBuilder omits a null — which
+            // would send {} and earn invalidRequest. `?? ""` is marshalling, not a decision: no trim, no check.
+            var json = new JsonBuilder().Add("language", language ?? "").Build();
+            return BridgeReply.Parse(NativeBridge.SetLanguage(json));
+        }
+
+        /// <summary>
         /// Ends the current player's session and returns the SDK to a guest one.
         /// </summary>
         /// <remarks>

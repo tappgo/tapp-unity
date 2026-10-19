@@ -30,6 +30,11 @@ namespace TappGo.Internal
             return TappNative.Take(TappGo_SetUserID(TappNative.Encode(json)));
         }
 
+        internal static string SetLanguage(string json)
+        {
+            return TappNative.Take(TappGo_SetLanguage(TappNative.Encode(json)));
+        }
+
         internal static string HandleUrl(string json)
         {
             return TappNative.Take(TappGo_HandleURL(TappNative.Encode(json)));
@@ -52,6 +57,9 @@ namespace TappGo.Internal
 
         [DllImport("__Internal")]
         private static extern IntPtr TappGo_SetUserID(byte[] json);
+
+        [DllImport("__Internal")]
+        private static extern IntPtr TappGo_SetLanguage(byte[] json);
 
         [DllImport("__Internal")]
         private static extern IntPtr TappGo_HandleURL(byte[] json);

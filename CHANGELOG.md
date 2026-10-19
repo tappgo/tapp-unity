@@ -5,6 +5,38 @@ All notable changes to `com.tapp.go`. Follows [Semantic Versioning](https://semv
 Each entry names the **native versions it resolves** — the package's version and the SDKs' are independent,
 and a wrapper that silently changed which binary a build picks up is the bug this line exists to prevent.
 
+## [2.2.0] — 2026-10-19
+
+Resolves iOS `tappgo/tapp-ios` **2.3.0** and Android `com.tappgo` **2.2.0**, both released on 2026-10-19. One new
+call; no settings or build-hook change. Install all three packages at `#v2.2.0`; they are released at one version.
+
+### Added
+
+- **`Tapp.SetLanguage(string language)`** — the language Tapp content is requested in, overriding the device's.
+  Pass a BCP 47 tag (`"he"`, `"pt-BR"`), sent as given; pass `null` (or `""`) to follow the device again. Stored
+  app-wide and **kept across `Logout`**; the same value again does nothing. Today only widget content is published
+  per language — a widget whose campaign has a translation is re-fetched in the background and redraws once the
+  new content is cached; Live Activities are unaffected. A tag the campaign has no translation for is not an
+  error: the base content is served. Nothing is validated or normalized in the package. Contract revision 15
+  (`docs/NATIVE-CONTRACT.md`): one additive bridge member, `setLanguage`, synchronous on both platforms.
+
+### Native
+
+- **Pools, on both platforms, with nothing to call.** An image or text node the back office publishes with several
+  candidates shows one of them at random once per refresh of a widget's content; a spin or a countdown tick keeps the
+  pick, and Live Activity content is not published with pools today. Rendering is native, so the package has nothing
+  to add; the content arrives with the native pins.
+
+## [2.1.2] — 2026-10-15
+
+Resolves iOS `tappgo/tapp-ios` **2.2.3** and Android `com.tappgo` **2.1.1**. Nothing changed in this package's API,
+settings or build hooks: this release moves the iOS pin, and the one fix it brings is in Tapp Live Activities'
+changelog. Tapp Widgets gains a setting of its own, in its changelog. Install all three packages at `#v2.1.2`;
+they are released at one version.
+
+- **Native pin: iOS 2.2.3.** `TappLiveActivities.Start`, `Update` and `End` for the same card now take effect in
+  the order you call them, so an `End` issued right after its `Start` ends the card. Android stays at 2.1.1.
+
 ## [2.1.1] — 2026-10-11
 
 Resolves iOS `tappgo/tapp-ios` **2.2.2** and Android `com.tappgo` **2.1.1**. Nothing changed in this package's API,
