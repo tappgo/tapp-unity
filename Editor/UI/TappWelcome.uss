@@ -1,0 +1,107 @@
+/*
+    The first-run window, layered on TappSettings.uss.
+
+    Only what a step list needs lives here. The brand tokens, header, rule, status strip and button all come
+    from the settings stylesheet, so the two pages cannot drift apart — and the same tapp--dark/tapp--light
+    split applies: a pair below means something genuinely differs per skin, and anything written once does not.
+*/
+
+.tapp-welcome__scroll {
+    flex-grow: 1;
+}
+
+.tapp-welcome__intro {
+    white-space: normal;
+    font-size: 12px;
+    margin-bottom: 14px;
+    opacity: 0.85;
+}
+
+/* MARK: - Steps */
+
+.tapp-step {
+    flex-direction: row;
+    margin-bottom: 14px;
+}
+
+/*
+    A circle, so the number reads as a step rather than as a heading that happens to be a digit. Fixed
+    width and height with a matching border-radius is how UI Toolkit draws one — there is no aspect-ratio.
+*/
+.tapp-step__badge {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    font-size: 11px;
+    color: rgb(255, 255, 255);
+    background-color: var(--tapp-accent);
+}
+
+.tapp-step__body {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.tapp-step__title {
+    -unity-font-style: bold;
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+/*
+    white-space: normal is what makes these wrap. Without it a Label reports its full single-line width as
+    its *minimum*, the layout honours that over the window, and the right-hand edge of every step goes off
+    screen — the same failure the sample's console hit with a non-wrapping GUIStyle.
+*/
+.tapp-step__text {
+    white-space: normal;
+    font-size: 12px;
+    margin-bottom: 8px;
+    opacity: 0.85;
+}
+
+/*
+    The third step has no button, so its text is the last thing in the block and does not need the gap that
+    separates the others from theirs. Marked with a class rather than :last-child, which USS parses and then
+    reports as an unknown pseudo class — it is not one of the selectors UI Toolkit implements.
+*/
+.tapp-step--last .tapp-step__text {
+    margin-bottom: 0;
+}
+
+/* MARK: - Footer */
+
+.tapp-welcome__footer {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 14px;
+}
+
+/*
+    Secondary, because the two buttons above it are the actions this window exists for. Outlined rather
+    than filled: a second solid purple button would compete with them for the same attention.
+*/
+.tapp-button--ghost {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 1px;
+    border-color: var(--tapp-accent);
+}
+
+.tapp--dark .tapp-button--ghost { color: rgb(168, 134, 255); }
+.tapp--light .tapp-button--ghost { color: rgb(84, 30, 200); }
+
+.tapp-button--ghost:hover { background-color: rgba(108, 41, 255, 0.12); }
+.tapp-button--ghost:active { background-color: rgba(108, 41, 255, 0.22); }
+
+.tapp-welcome__reopen {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-left: 12px;
+    white-space: normal;
+    font-size: 11px;
+    opacity: 0.6;
+}
