@@ -45,9 +45,9 @@ Add core **and each product you use** to `Packages/manifest.json`, all at the **
 ```json
 {
   "dependencies": {
-    "com.tapp.go": "https://github.com/tappgo/tapp-unity.git#v2.2.0",
-    "com.tapp.go.liveactivities": "https://github.com/tappgo/tapp-liveactivities-unity.git#v2.2.0",
-    "com.tapp.go.widgets": "https://github.com/tappgo/tapp-widgets-unity.git#v2.2.0"
+    "com.tapp.go": "https://github.com/tappgo/tapp-unity.git#v2.3.0",
+    "com.tapp.go.liveactivities": "https://github.com/tappgo/tapp-liveactivities-unity.git#v2.3.0",
+    "com.tapp.go.widgets": "https://github.com/tappgo/tapp-widgets-unity.git#v2.3.0"
   }
 }
 ```

@@ -5,6 +5,32 @@ All notable changes to `com.tapp.go`. Follows [Semantic Versioning](https://semv
 Each entry names the **native versions it resolves** — the package's version and the SDKs' are independent,
 and a wrapper that silently changed which binary a build picks up is the bug this line exists to prevent.
 
+## [2.3.0] — unreleased
+
+Resolves iOS `tappgo/tapp-ios` **2.5.0** (2026-11-12) and Android `com.tappgo` **2.3.0** (2026-11-01). No core C# API or
+setting change; the Widgets package adds one call and two settings. Install all three packages at `#v2.3.0`; they are
+released at one version.
+
+### Native
+
+- **Pins move to iOS `tappgo/tapp-ios` 2.5.0 and Android `com.tappgo` 2.3.0** (`Runtime/Internal/NativePin.cs`,
+  `Editor/TappGoDependencies.xml`, the contract's `Tracks` rows). `make check-native-pin` passes against both.
+- **A widget tap that lands before `Tapp.Configure` is served on iOS too** (iOS 2.4.0; Android already did): the link
+  is parked just after your configure on a cold launch. Read `TappWidgets.PendingLink()` once more after your own
+  `Tapp.Configure` (§3 of `docs/NATIVE-CONTRACT.md`).
+- **A widget switched to a campaign at a lower configuration version now draws that campaign** (iOS 2.5.0); before, it
+  stayed on its failure card until the new campaign was saved past the old one's version.
+- Contract revision 16 (`docs/NATIVE-CONTRACT.md`): one additive Widgets member, `setWidgetRemoteUpdateParameters`,
+  bound in `com.tapp.go.widgets` as `TappWidgets.SetRemoteUpdateParameters`.
+
+### Changed
+
+- **The mirror's `main` follows each release.** `tappgo/tapp-unity`'s `main` showed 2.1.1 while 2.2.0 was the
+  latest tag, because `main` takes changes only through a pull request and a release pushed its tag alone.
+  The release now also opens that pull request: `release/vX.Y.Z-main`, one commit on `main` carrying the tag's
+  tree exactly, titled `com.tapp.go X.Y.Z`, for a person to approve and squash-merge. The tag stays what an
+  install names (`#vX.Y.Z`); nothing changes in the package.
+
 ## [2.2.0] — 2026-10-19
 
 Resolves iOS `tappgo/tapp-ios` **2.3.0** and Android `com.tappgo` **2.2.0**, both released on 2026-10-19. One new
