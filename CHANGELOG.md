@@ -5,7 +5,24 @@ All notable changes to `com.tapp.go`. Follows [Semantic Versioning](https://semv
 Each entry names the **native versions it resolves** — the package's version and the SDKs' are independent,
 and a wrapper that silently changed which binary a build picks up is the bug this line exists to prevent.
 
-## [2.3.0] — unreleased
+## [2.3.1] — 2026-11-17
+
+Resolves iOS `tappgo/tapp-ios` **2.5.1** and Android `com.tappgo` **2.3.1**, both released on 2026-11-17. No C# API,
+setting or build-hook change: this release moves both pins for their fixes, described here and in the products'
+changelogs. Install all three packages at `#v2.3.1`; they are released at one version.
+
+### Native
+
+- **Pins move to iOS `tappgo/tapp-ios` 2.5.1 and Android `com.tappgo` 2.3.1** (`Runtime/Internal/NativePin.cs`,
+  `Editor/TappGoDependencies.xml`, the contract's `Tracks` rows). `make check-native-pin` passes against both. No
+  bridge change; the contract stays at revision 16.
+- **Android: calling `Tapp.Configure` again with the same settings changes nothing.** A second `Configure` in one
+  process — a scene that configures in its `Awake`, a reload — used to set the SDK up again; it now answers `Ok` and
+  leaves everything as it was. Different widget ids are still refused. Configuring again close together could also,
+  rarely, freeze the SDK and the thread that called it, in every Android release since 2.0.0. Both fixed in the
+  Android SDK 2.3.1.
+
+## [2.3.0] — 2026-11-12
 
 Resolves iOS `tappgo/tapp-ios` **2.5.0** (2026-11-12) and Android `com.tappgo` **2.3.0** (2026-11-01). No core C# API or
 setting change; the Widgets package adds one call and two settings. Install all three packages at `#v2.3.0`; they are
