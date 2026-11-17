@@ -1,6 +1,6 @@
 {
   "name": "com.tapp.go",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "displayName": "Tapp Core",
   "description": "The core of Tapp for Unity: configuration and the player's identity, shared by every Tapp product package. Install it with the products you use — com.tapp.go.liveactivities, com.tapp.go.widgets. Ships no native code: resolves the Tapp iOS SDK as a Swift package and the Tapp Android SDK from Maven Central at build time.",
   "unity": "2022.3",
@@ -22,6 +22,6 @@
   "repository": {
     "url": "https://github.com/TappRepos/TappCore-Unity",
     "type": "git",
-    "revision": "36b0f955e4bea45367a4e1a343565324440be472"
+    "revision": "aa90f11d58e96998fc852c68c87b506236d760c3"
   }
 }
