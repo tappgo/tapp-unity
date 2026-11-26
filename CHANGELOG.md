@@ -3,12 +3,12 @@
 All notable changes to `com.tapp.go`. Follows [Semantic Versioning](https://semver.org).
 
 Each entry names the **native versions it resolves** — the package's version and the SDKs' are independent,
-and a wrapper that silently changed which binary a build picks up is the bug this line exists to prevent.
+so every entry says exactly which binaries a build picks up.
 
 ## [2.3.1] — 2026-11-17
 
 Resolves iOS `tappgo/tapp-ios` **2.5.1** and Android `com.tappgo` **2.3.1**, both released on 2026-11-17. No C# API,
-setting or build-hook change: this release moves both pins for their fixes, described here and in the products'
+setting or build-hook change: this release moves both pins for their improvements, described here and in the products'
 changelogs. Install all three packages at `#v2.3.1`; they are released at one version.
 
 ### Native
@@ -17,10 +17,8 @@ changelogs. Install all three packages at `#v2.3.1`; they are released at one ve
   `Editor/TappGoDependencies.xml`, the contract's `Tracks` rows). `make check-native-pin` passes against both. No
   bridge change; the contract stays at revision 16.
 - **Android: calling `Tapp.Configure` again with the same settings changes nothing.** A second `Configure` in one
-  process — a scene that configures in its `Awake`, a reload — used to set the SDK up again; it now answers `Ok` and
-  leaves everything as it was. Different widget ids are still refused. Configuring again close together could also,
-  rarely, freeze the SDK and the thread that called it, in every Android release since 2.0.0. Both fixed in the
-  Android SDK 2.3.1.
+  process — a scene that configures in its `Awake`, a reload — answers `Ok` and leaves everything as it was, however
+  close together the calls are. Different widget ids are still refused. From the Android SDK 2.3.1.
 
 ## [2.3.0] — 2026-11-12
 
@@ -35,16 +33,15 @@ released at one version.
 - **A widget tap that lands before `Tapp.Configure` is served on iOS too** (iOS 2.4.0; Android already did): the link
   is parked just after your configure on a cold launch. Read `TappWidgets.PendingLink()` once more after your own
   `Tapp.Configure` (§3 of `docs/NATIVE-CONTRACT.md`).
-- **A widget switched to a campaign at a lower configuration version now draws that campaign** (iOS 2.5.0); before, it
-  stayed on its failure card until the new campaign was saved past the old one's version.
+- **A widget switched to another campaign draws the new campaign right away** (iOS 2.5.0), whatever the two
+  campaigns' configuration versions.
 - Contract revision 16 (`docs/NATIVE-CONTRACT.md`): one additive Widgets member, `setWidgetRemoteUpdateParameters`,
   bound in `com.tapp.go.widgets` as `TappWidgets.SetRemoteUpdateParameters`.
 
 ### Changed
 
-- **The mirror's `main` follows each release.** `tappgo/tapp-unity`'s `main` showed 2.1.1 while 2.2.0 was the
-  latest tag, because `main` takes changes only through a pull request and a release pushed its tag alone.
-  The release now also opens that pull request: `release/vX.Y.Z-main`, one commit on `main` carrying the tag's
+- **The mirror's `main` follows each release.** `main` on `tappgo/tapp-unity` takes changes only through a pull
+  request, so each release now also opens one: `release/vX.Y.Z-main`, one commit on `main` carrying the tag's
   tree exactly, titled `com.tapp.go X.Y.Z`, for a person to approve and squash-merge. The tag stays what an
   install names (`#vX.Y.Z`); nothing changes in the package.
 
@@ -73,7 +70,7 @@ call; no settings or build-hook change. Install all three packages at `#v2.2.0`;
 ## [2.1.2] — 2026-10-15
 
 Resolves iOS `tappgo/tapp-ios` **2.2.3** and Android `com.tappgo` **2.1.1**. Nothing changed in this package's API,
-settings or build hooks: this release moves the iOS pin, and the one fix it brings is in Tapp Live Activities'
+settings or build hooks: this release moves the iOS pin, and the one change it brings is in Tapp Live Activities'
 changelog. Tapp Widgets gains a setting of its own, in its changelog. Install all three packages at `#v2.1.2`;
 they are released at one version.
 
@@ -83,11 +80,11 @@ they are released at one version.
 ## [2.1.1] — 2026-10-11
 
 Resolves iOS `tappgo/tapp-ios` **2.2.2** and Android `com.tappgo` **2.1.1**. Nothing changed in this package's API,
-settings or build hooks: this release moves the native pins, and every fix in it comes from the two native SDKs.
+settings or build hooks: this release moves the native pins, and every change in it comes from the two native SDKs.
 Install all three packages at `#v2.1.1`; they are released at one version.
 
 - **Native pins: iOS 2.2.2, Android 2.1.1.** What reaches your game is in Tapp Widgets' changelog, nearly all of it
-  widget fixes, with **one thing to do on iOS** if your game reads widget links in `Application.deepLinkActivated`.
+  widget refinements, with **one thing to do on iOS** if your game reads widget links in `Application.deepLinkActivated`.
 
 ## [2.1.0] — 2026-10-05
 
@@ -150,8 +147,7 @@ Widgets on both platforms, Android, and no native code in the package.
   and then asks every installed product about its own settings. The settings page and the Welcome window
   judge both platforms and say which build would fail; their colour follows the platform the Editor is set
   to build.
-- The tarball audit forbids every native binary and trips above 2 MB unpacked. A developer's leftover
-  framework is the new way a tarball goes wrong.
+- The tarball audit forbids every native binary and trips above 2 MB unpacked.
 
 ### Added
 
